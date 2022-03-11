@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <stdio.h>
+
 #if !defined(GAME_H)
 #define GAME_H
 

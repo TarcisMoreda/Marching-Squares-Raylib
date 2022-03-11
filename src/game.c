@@ -1,6 +1,7 @@
 #include "../include/game.h"
 
 int gerarPesos(ponto** posPontos);
+int checarPosMouse(Vector2 posPonto);
 
 ponto** calcularPontos(){	
 	srand((unsigned int)time(NULL));
@@ -43,6 +44,19 @@ int processarEntrada(ponto** posPontos, int* trocarDesenho){
 		break;
 	}
 
+	if(IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		for(int x=0; x<quantColunas; ++x)
+			for(int y=0; y<quantLinhas; ++y){
+				if(checarPosMouse(posPontos[x][y].posicao))
+					posPontos[x][y].peso = 1;
+			}
+	else if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+		for(int x=0; x<quantColunas; ++x)
+			for(int y=0; y<quantLinhas; ++y){
+				if(checarPosMouse(posPontos[x][y].posicao))
+					posPontos[x][y].peso = 0;
+			}
+
 	return 0;
 }
 
@@ -56,6 +70,16 @@ int gerarPesos(ponto** posPontos){
 			else
 				posPontos[x][y].peso = 0;
 		}
+
+	return 0;
+}
+
+int checarPosMouse(Vector2 posPonto){
+	Vector2 posMouse = GetMousePosition();
+
+	if(posMouse.x>(posPonto.x-(distanciaEntrePontos/2)) && posMouse.x<posPonto.x+(distanciaEntrePontos/2)
+	&& posMouse.y>(posPonto.y-(distanciaEntrePontos/2)) && posMouse.y<posPonto.y+(distanciaEntrePontos/2))
+		return 1;
 
 	return 0;
 }
